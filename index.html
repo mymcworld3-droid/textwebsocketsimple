@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>多人計數器</h1>
+  <h2 id="count">0</h2>
+  <button onclick="add()">+1</button>
+
+  <script>
+    const socket = new WebSocket("ws://localhost:8080");
+    const countEl = document.getElementById("count");
+
+    socket.onmessage = e => {
+      const data = JSON.parse(e.data);
+      countEl.textContent = data.counter;
+    };
+
+    function add() {
+      socket.send("add");
+    }
+  </script>
+</body>
+</html>
